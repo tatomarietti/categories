@@ -3,7 +3,6 @@ package com.tatomarietti.categories.service.service;
 import com.tatomarietti.categories.service.api.dto.CategoriesSummaryDto;
 import com.tatomarietti.categories.service.api.dto.CategoryDto;
 import com.tatomarietti.categories.service.api.dto.ItemDto;
-import com.tatomarietti.categories.service.api.dto.ItemResponseDto;
 import com.tatomarietti.categories.service.api.dto.SubCategoryDto;
 import com.tatomarietti.categories.service.app.ItemsParser;
 import com.tatomarietti.categories.service.app.model.CategoriesSummary;
@@ -54,18 +53,14 @@ public class ItemsCleanerService {
     return new AbstractMap.SimpleEntry<>(categoryService.toCategoryDto(entry.getKey()), entry.getValue());
   }
 
-  private LinkedHashSet<ItemResponseDto> toItemsDto(final LinkedHashSet<Item> items) {
+  private LinkedHashSet<ItemDto> toItemsDto(final LinkedHashSet<Item> items) {
     return items.stream()
         .map(this::toItemDto)
         .collect(toCollection(LinkedHashSet::new));
   }
 
-  private ItemResponseDto toItemDto(final Item item) {
-    return new ItemResponseDto(categoryService.toCategoryDto(item.getCategory()), toSubCategoryDto(item.getSubCategory()));
-  }
-
-  private SubCategoryDto toSubCategoryDto(final SubCategory subCategory) {
-    return new SubCategoryDto(subCategory.getName());
+  private ItemDto toItemDto(final Item item) {
+    return new ItemDto(item.getCategory().getName(), item.getSubCategory().getName());
   }
 
 }
