@@ -1,6 +1,6 @@
 package com.tatomarietti.categories.service.app;
 
-import com.tatomarietti.categories.service.api.ItemDto;
+import com.tatomarietti.categories.service.api.dto.ItemDto;
 import com.tatomarietti.categories.service.app.model.Category;
 import com.tatomarietti.categories.service.app.model.Item;
 import com.tatomarietti.categories.service.app.model.SubCategory;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toCollection;
 
-public class ItemParser {
+public class ItemsParser {
 
   /**
    * Parses a List of ItemDao into valid and non-duplicated Items and preserving its order.

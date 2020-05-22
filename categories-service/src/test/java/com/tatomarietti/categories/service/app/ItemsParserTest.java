@@ -1,21 +1,19 @@
 package com.tatomarietti.categories.service.app;
 
-import com.tatomarietti.categories.service.api.ItemDto;
+import com.tatomarietti.categories.service.api.dto.ItemDto;
 import com.tatomarietti.categories.service.app.model.Category;
 import com.tatomarietti.categories.service.app.model.Item;
 import com.tatomarietti.categories.service.app.model.SubCategory;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ItemParserTest {
+class ItemsParserTest {
 
   // Requirement 7
   /*
@@ -50,8 +48,8 @@ class ItemParserTest {
         new ItemDto("PERSON  ", "Mac       ")
     );
 
-    final ItemParser itemParser = new ItemParser();
-    final LinkedHashSet<Item> parsedItems = itemParser.parseItems(itemDtos);
+    final ItemsParser itemsParser = new ItemsParser();
+    final LinkedHashSet<Item> parsedItems = itemsParser.parseItems(itemDtos);
 
     assertThat(parsedItems)
         .hasSize(itemDtos.size() -1); // PERSON, Bob Jones is repeated

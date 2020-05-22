@@ -1,0 +1,70 @@
+openapi: "3.0.0"
+info:
+  title: Java Categories/Sets Assignment
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080/'
+  description: 'Debug server as SpringBooot application'
+paths:
+  /cleaner:
+    post:
+      summary: Clean a list of Items
+      operationId: cleanItems
+      requestBody:
+        description: List of Items to clean
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Item'
+      responses:
+        '200':
+          description: Items list cleaned successfuly
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoriesSummary"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    CategoriesSummary:
+      type: object
+      required:
+        - items
+        - categoriesCount
+      properties:
+        items:
+          type: object
+          $ref: "#/components/schemas/Item"
+        categoriesCount:
+          type: object
+          additionalProperties:
+            type: integer
+    Item:
+      type: object
+      required:
+        - category
+        - subCategory
+      properties:
+        category:
+          type: string
+        subCategory:
+          type: string
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
