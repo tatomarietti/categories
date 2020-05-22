@@ -12,6 +12,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class CategoriesSummaryDto {
 
-  private final LinkedHashSet<Item> items;
-  private final Map<Category, Long> categoriesCount;
+  private final LinkedHashSet<ItemResponseDto> items;
+  private final Map<CategoryDto, Long> categoriesCount;
 }

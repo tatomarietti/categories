@@ -32,6 +32,48 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /category:
+    post:
+      summary: Adds a new Category
+      operationId: addCategory
+      requestBody:
+        description: The Category to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Category'
+      responses:
+        '201':
+          description: Category added successfuly
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      summary: Get all registered Categories
+      operationId: getAllCategory
+      responses:
+        '200':
+          description: List of registered Categories
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Categories"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
     CategoriesSummary:
@@ -57,6 +99,17 @@ components:
           type: string
         subCategory:
           type: string
+    Category:
+      type: object
+      required:
+        - name
+      properties:
+        namey:
+          type: string
+    Categories:
+      type: array
+      items:
+        $ref: "#/components/schemas/Category"
     Error:
       type: object
       required:

@@ -27,10 +27,14 @@ public class CategoryValidator {
   }
 
   public CategoryValidator(final Set<Category> validCategories){
-    this.validCategories = DEFAULT_VALID_CATEGORIES;
+    this.validCategories = validCategories;
   }
 
-  public boolean isValid(final Category category) {
+  public boolean isValidCategory(final Category category) {
     return validCategories.contains(category);
+  }
+
+  public boolean isValidName(final String name) {
+    return Category.isValidName(name);
   }
 }

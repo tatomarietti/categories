@@ -81,9 +81,13 @@ Sample output for the sample input:
 2. Categories names cannot contain blank characters (i.e.: `PER SON` is not a valid category).
 3. SubCategories names are case-sensitive and valid in any casing format (i.e.: `Bob Jones` is a valid sub-category and different than the also valid `bob jones`).
 4. SubCategories can contain blank characters (i.e.: `Bob Jones` is a valid category).
+5. While `Requirement 10` states `The order of entries in the input data must be preserved`, the sample provided is not preserving the input order and ordered by `Subcategory` instead.
+This implementation is following Requirement 10 and assuming the given Sample is wrong.
+6. While `Requirement 11` states `The output must also include the count of entries for each valid category, sorted by the number of valid, unique entries`, it is not specifying ether ASCENDING or DESCENDING order.
+This implementation assumes that the desired is descending (higher counts first) and that the order in the Sample output is wrong.
 
 ## Implementation notes
 
-Using latest release version (2.3.0.RELEASE) of SpringBoot https://github.com/spring-projects/spring-boot as of May 22nd 2020.
-Using latest release version (1.18.12) of Project Lombok https://projectlombok.org/ as of May 22nd 2020, to speed-up Java development and reduce boilerplate code.
-Using latest release version (3.10) of Apache Commons Lang https://commons.apache.org/proper/commons-lang/ as of May 22nd 2020, to speed-up Java development and reduce boilerplate code.
+1. Using latest release version (2.3.0.RELEASE) of SpringBoot https://github.com/spring-projects/spring-boot as of May 22nd 2020.
+2. Using latest release version (1.18.12) of Project Lombok https://projectlombok.org/ as of May 22nd 2020, to speed-up Java development and reduce boilerplate code.
+3. Using latest release version (3.10) of Apache Commons Lang https://commons.apache.org/proper/commons-lang/ as of May 22nd 2020, to speed-up Java development and reduce boilerplate code.

@@ -11,7 +11,7 @@ class CategoryTest {
   public void categoryNameCannotBeBlank() {
     String name = "";
 
-    assertThrows(InvalidNameException.class, () -> new Category(name)); ;
+    assertThrows(InvalidNameException.class, () -> Category.fromName(name)); ;
   }
 
   // Assumption 1.
@@ -19,7 +19,7 @@ class CategoryTest {
   public void categoryNameCannotContainLowercaseCharacters() {
     String name = "PERSoN";
 
-    assertThrows(InvalidNameException.class, () -> new Category(name)); ;
+    assertThrows(InvalidNameException.class, () -> Category.fromName(name)); ;
   }
 
   // Assumption 1.
@@ -27,7 +27,7 @@ class CategoryTest {
   public void categoryNameIsUppercase() {
     String name = "PERSON";
 
-    final Category category = new Category(name);
+    final Category category = Category.fromName(name);
 
     assertEquals(name, category.getName());
   }
@@ -37,6 +37,6 @@ class CategoryTest {
   public void categoryNameCannotBlankCharacters() {
     String name = "PER SON";
 
-    assertThrows(InvalidNameException.class, () -> new Category(name)); ;
+    assertThrows(InvalidNameException.class, () -> Category.fromName(name)); ;
   }
 }

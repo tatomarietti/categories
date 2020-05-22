@@ -13,11 +13,11 @@ class CategoryValidatorTest {
   void hasDefaultValidCategories() {
     final CategoryValidator categoryValidator = new CategoryValidator();
 
-    assertTrue(categoryValidator.isValid(Category.fromName("PERSON")));
-    assertTrue(categoryValidator.isValid(Category.fromName("PLACE")));
-    assertTrue(categoryValidator.isValid(Category.fromName("ANIMAL")));
-    assertTrue(categoryValidator.isValid(Category.fromName("COMPUTER")));
-    assertTrue(categoryValidator.isValid(Category.fromName("OTHER")));
+    assertTrue(categoryValidator.isValidCategory(Category.fromName("PERSON")));
+    assertTrue(categoryValidator.isValidCategory(Category.fromName("PLACE")));
+    assertTrue(categoryValidator.isValidCategory(Category.fromName("ANIMAL")));
+    assertTrue(categoryValidator.isValidCategory(Category.fromName("COMPUTER")));
+    assertTrue(categoryValidator.isValidCategory(Category.fromName("OTHER")));
   }
 
   // Requirement 8
@@ -25,7 +25,7 @@ class CategoryValidatorTest {
   void rejectsInvalidCategory() {
     final CategoryValidator categoryValidator = new CategoryValidator();
 
-    assertThat(categoryValidator.isValid(Category.fromName("INVALID")))
+    assertThat(categoryValidator.isValidCategory(Category.fromName("INVALID")))
         .isFalse();
   }
 }

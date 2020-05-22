@@ -46,6 +46,6 @@ public class CategoriesAggregator {
   }
 
   private boolean itemWithValidCategory(final Item item) {
-    return validator.isValid(item.getCategory());
+    return validator.isValidCategory(item.getCategory());
   }
 }

@@ -2,7 +2,6 @@ package com.tatomarietti.categories.service.app.model;
 
 import lombok.Value;
 
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
