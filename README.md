@@ -91,3 +91,4 @@ This implementation assumes that the desired is descending (higher counts first)
 1. Using latest release version (2.3.0.RELEASE) of SpringBoot https://github.com/spring-projects/spring-boot as of May 22nd 2020.
 2. Using latest release version (1.18.12) of Project Lombok https://projectlombok.org/ as of May 22nd 2020, to speed-up Java development and reduce boilerplate code.
 3. Using latest release version (3.10) of Apache Commons Lang https://commons.apache.org/proper/commons-lang/ as of May 22nd 2020, to speed-up Java development and reduce boilerplate code.
+4. Using h2 in-memory database as allowed by `Requirement 14`.

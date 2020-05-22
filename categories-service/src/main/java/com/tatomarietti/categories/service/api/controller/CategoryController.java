@@ -10,6 +10,7 @@ import com.tatomarietti.categories.service.service.ItemsCleanerService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,11 @@ public class CategoryController {
   @ResponseStatus(HttpStatus.CREATED)
   public CategoryDto add(final @RequestBody CategoryDto category) {
     return service.add(category);
+  }
+
+  @DeleteMapping(PATH_CATEGORY)
+  public void remove(final @RequestBody CategoryDto category) {
+    service.remove(category);
   }
 
   @GetMapping(PATH_CATEGORY)

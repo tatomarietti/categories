@@ -74,6 +74,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete a registered Category
+      operationId: deleteCategory
+      responses:
+        '200':
+          description: Deletes a registered Category
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
     CategoriesSummary:

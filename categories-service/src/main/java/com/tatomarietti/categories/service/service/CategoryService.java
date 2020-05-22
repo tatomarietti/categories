@@ -26,7 +26,8 @@ public class CategoryService {
   private CategoryRepository categoryRepository;
 
   /**
-   * Adds a new Category as valid if its name is valid and is not already registered
+   * Adds a new Category as valid if its name is valid and is not already registered.
+   *
    * @param categoryDto
    * @return a Dto from the created Category
    */
@@ -44,7 +45,23 @@ public class CategoryService {
   }
 
   /**
-   * List al valid registered Categories
+   * Deletes the given Category from these registered as valid.
+   *
+   * @param categoryDto
+   */
+  public void remove(final CategoryDto categoryDto) {
+    // Let invalid name format error bubble up
+    final Category category = Category.fromName(categoryDto.getName());
+
+    final CategoryValidator categoriesValidator = getCategoriesValidator();
+    if (!categoriesValidator.isValidCategory(category)) {
+      throw new InvalidActionException("Category with name '" + categoryDto.getName() + "' not registered.");
+    }
+    categoryRepository.delete(category);
+  }
+
+  /**
+   * List al valid registered Categories.
    *
    * @return
    */
