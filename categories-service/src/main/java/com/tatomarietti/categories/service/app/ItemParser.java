@@ -7,7 +7,8 @@ import com.tatomarietti.categories.service.app.model.SubCategory;
 
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toCollection;
 
 public class ItemParser {
 
@@ -23,7 +24,7 @@ public class ItemParser {
     return items.stream()
         .filter(this::isValid)
         .map(this::toItem)
-        .collect(Collectors.toCollection(LinkedHashSet::new));
+        .collect(toCollection(LinkedHashSet::new));
   }
 
   private boolean isValid(final ItemDto itemDto) {
