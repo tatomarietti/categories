@@ -1,6 +1,7 @@
 package com.tatomarietti.categories.service.app.model;
 
 import com.tatomarietti.categories.service.app.errors.InvalidNameException;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.apache.commons.lang3.StringUtils;
 
@@ -10,12 +11,17 @@ public class Category {
   private final String name;
 
   public Category(final String name) {
-    if(StringUtils.isBlank(name)) {
-      throw new InvalidNameException("Category name cannot be null or empty");
+    if (!isValidName(name)) {
+      throw new InvalidNameException("Category name cannot be null or empty and should contain only uppercase characters");
     }
-    if(!StringUtils.isAllUpperCase(name)) {
-      throw new InvalidNameException("Category name should contain only uppercase characters");
-    }
-    this.name = name;
+    this.name = name.trim();
+  }
+
+  public static boolean isValidName(final String name) {
+    return !StringUtils.isBlank(name) && StringUtils.isAllUpperCase(name.trim());
+  }
+
+  public static Category fromName(final String person) {
+    return new Category(person);
   }
 }
