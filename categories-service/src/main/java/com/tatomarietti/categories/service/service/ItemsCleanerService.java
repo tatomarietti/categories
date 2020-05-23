@@ -28,6 +28,11 @@ public class ItemsCleanerService {
 
   private CategoryService categoryService;
 
+  /**
+   * Cleans the given Items list based on the registered Categories in the system.
+   * @param items the list of items to clean
+   * @return A Summary containing the cleaned list and a per-category frequencies list
+   */
   public CategoriesSummaryDto clean(final List<ItemDto> items) {
 
     final ItemsParser parser = new ItemsParser();

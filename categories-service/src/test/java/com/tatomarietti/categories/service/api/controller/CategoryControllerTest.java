@@ -46,6 +46,34 @@ class CategoryControllerTest {
   }
 
   @Test
+  void cannotAddSameCategoryTwice() throws Exception {
+    final String foodCategory = "{\"name\":\"FOOD\"}";
+
+    mockMvc.perform(post(CategoryController.PATH_CATEGORY)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(foodCategory))
+        .andExpect(status().isCreated())
+        .andReturn();
+
+    mockMvc.perform(post(CategoryController.PATH_CATEGORY)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(foodCategory))
+        .andExpect(status().isConflict())
+        .andReturn();
+  }
+
+  @Test
+  void cannotAddInvalidNameCategory() throws Exception {
+    final String foodCategory = "{\"name\":\"lower\"}";
+
+    mockMvc.perform(post(CategoryController.PATH_CATEGORY)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(foodCategory))
+        .andExpect(status().isBadRequest())
+        .andReturn();
+  }
+
+  @Test
   void canAddACategoryAndIsPresentInListAll() throws Exception {
     final String anotherCategory = "{\"name\":\"FOOD\"}";
 
@@ -74,6 +102,17 @@ class CategoryControllerTest {
     mockMvc.perform(get(CategoryController.PATH_CATEGORY))
         .andExpect(status().isOk())
         .andExpect(content().string(not(containsString(animalCategory))))
+        .andReturn();
+  }
+
+  @Test
+  void cannotRemoveAnInvalidNameCategory() throws Exception {
+    final String nonExistent = "{\"name\":\"IN    VALID\"}]";
+
+    mockMvc.perform(delete(CategoryController.PATH_CATEGORY)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(nonExistent))
+        .andExpect(status().isBadRequest())
         .andReturn();
   }
 }

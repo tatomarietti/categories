@@ -19,6 +19,12 @@ public class ItemsCleanerController {
 
   private ItemsCleanerService service;
 
+  /**
+   * Handler for POST /cleaner to clean a list of Items based on the currently valid Categories
+   *
+   * @param items the list of Items to clean and summarize
+   * @return A summary with the list of cleaned Items and a per-category frequencies list
+   */
   @PostMapping(PATH_CLEANER)
   public CategoriesSummaryDto clean(final @RequestBody List<ItemDto> items) {
     return service.clean(items);

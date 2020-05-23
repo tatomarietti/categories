@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 servers:
   - url: 'http://localhost:8080/'
-  description: 'Debug server as SpringBooot application'
+  description: 'Debug server as SpringBoot application'
 paths:
   /cleaner:
     post:
@@ -52,6 +52,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Category"
+        '400':
+          description: Invalid Category name
+        '409':
+          description: Category already exists
         default:
           description: unexpected error
           content:
