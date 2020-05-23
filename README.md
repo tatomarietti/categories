@@ -1,5 +1,9 @@
 # Java Categories/Sets Assignment
 
+By Santiago Marietti.
+
+Original version of this document: [README.md](https://github.com/tatomarietti/categories/blob/master/README.md)
+
 ## Assignment Description
 
 Original doc: [Java-Backend-Categories-Coding-Assignment_v2.docx](./Java-Backend-Categories-Coding-Assignment_v2.docx)
@@ -106,8 +110,10 @@ This implementation assumes that the desired is descending (higher counts first)
   - `service` contains the logic orchestrating the received requests.
   - `storage` contains the code to support persistent storage (in memory by default, but can be easily configured to be persisted on disk).
 
+- Api specification can be found at [scpec directory](./categories-service/spec/openapi.yaml) in OpenAPI 3.0 format.
+  - See [OpenAPI specification](#-OpenAPI-specification) at the end of this document.
 
-![Project Layout](./categories-service/doc-img/project-layout.jpg?raw=true "Project Layout")
+![Project Layout](./categories-service/src/main/resources/static/project-layout.jpg?raw=true "Project Layout")
 
 ### Build and execute the solution
 
@@ -124,18 +130,38 @@ Steps to compile the application (from the repository root):
      ```bash
      java -jar target/categories-service-0.0.1-SNAPSHOT.jar
      ```
-  4. After a couple of seconds the application will be started and listening at localhost on port 8080, and can be tested as described in the following section of this document.
+  4. After a couple of seconds the application will be started and listening at localhost on port 8080, and can be tested as described in [Tests](#Tests).
   5. Errors and exceptions will be logged to standard output, optionally the output can be also redirected to a file with:
      ```bash
      java -jar target/categories-service-0.0.1-SNAPSHOT.jar | tee -a categories-service.log
      ```
 
+### Deployment
+
+The service is currently deployed as a service behind NGINX at <a href="http://45.62.245.158" target="_blank">45.62.245.158</a> where there is an html version of this document as home page.
+
+The endpoints `GET, POST, DELETE /categories` and `POST /cleaner` can be exercised in that deployment as described in the next section of this document.
+
+Logging can be configured to be redirected with custom Spring configuration.
+
+### A note on load balancing
+
+The service currently uses an in memory H2 relational database.
+
+In order to scale horizontally deploying multiple instances of this service behind a load balancer, the persistence layer should be modified to use a shared database for the registered valid Categories.
+
+Assuming that the list of valid Categories doesn't change frequently, a Master-Slaves schema could be used where changes to the valid Categories ar written to the master, and reads during Items processing can be obtained from any slave.
+
+An alternative for simpler horizontal scaling is to make the service completely stateless, receiving the list of valid categories in the same request with the list of Items to clean,
+the client can maintain the list on its own or retrieve it from another service that may have different (more relaxed) scaling requirements.
+
+
 ### Tests
 
 #### With Postman
 
-- Request collection can be found [here](https://documenter.getpostman.com/view/4785998/Szt8dVRa?version=latest)
-- Or downloaded/executed whith Postman with the following button
+- Request collection can be found [here](https://documenter.getpostman.com/view/4785998/Szt8dVRa)
+- Or downloaded/executed with Postman with the following button
  
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/152a3fa3c20b96acc197)
 
@@ -143,12 +169,13 @@ Steps to compile the application (from the repository root):
 
 - Get All Categories
 ```bash
-curl --request GET 'localhost:8080/category'
+curl --request GET '45.62.245.158/category'
 ```
+<a href="45.62.245.158/category" target="_blank">Link to GET /category</a>
 
 - Add Category
 ```bash
-curl --request POST 'localhost:8080/category' \
+curl --request POST '45.62.245.158/category' \
 --header 'Content-Type: application/json' \
 --data-raw '{
  "name": "FOOD"
@@ -157,7 +184,7 @@ curl --request POST 'localhost:8080/category' \
 
 - Remove Category
 ```bash
-curl --request DELETE 'localhost:8080/category' \
+curl --request DELETE '45.62.245.158/category' \
 --header 'Content-Type: application/json' \
 --data-raw '{
  "name": "FOOD"
@@ -166,7 +193,7 @@ curl --request DELETE 'localhost:8080/category' \
 
 - Clean Items
 ```bash
-curl --request POST 'localhost:8080/cleaner' \                                                                                                                                                                                                                            [23:05:47]
+curl --request POST '45.62.245.158/cleaner' \                                                                                                                                                                                                                            [23:05:47]
 --header 'Content-Type: application/json' \
 --data-raw '[
   {"category": "PERSON", "subCategory": "Bob Jones"},
@@ -183,7 +210,7 @@ curl --request POST 'localhost:8080/cleaner' \                                  
 ]'
 ```
 
-**NOTE**: the previous collections assume that the service is running in localhost at port 8080 as described at [#Build-and-execute-the-solution](#Build-and-execute-the-solution) 
+**NOTE**: the previous collections assume that the service is running at IP 45.62.245.158, they can be changed to localhost at port 8080 as described at [#Build-and-execute-the-solution](#Build-and-execute-the-solution) 
 
 The codebase includes two different kind of tests:
  - Unit tests, testing individual classes functionality, especially these under [app](./categories-service/src/main/java/com/tatomarietti/categories/service/app) package.
@@ -191,4 +218,150 @@ The codebase includes two different kind of tests:
  - Api tests, testing the different exposed endpoints an its interactions.
    - Can be found under  [test/.../api/controller](./categories-service/src/test/java/com/tatomarietti/categories/service/api/controller).
 
-![Tests Run](./categories-service/doc-img/tests.jpg?raw=true "Tests Run")
+![Tests Run](./categories-service/src/main/resources/static/tests.jpg?raw=true "Tests Run")
+
+### OpenAPI specification
+
+File available at [categories-service/spec/openapi.yaml](https://github.com/tatomarietti/categories/blob/master/categories-service/spec/openapi.yaml)
+
+```yaml
+openapi: "3.0.0"
+info:
+  title: Java Categories/Sets Assignment
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080/'
+  description: 'Debug server as SpringBoot application'
+paths:
+  /cleaner:
+    post:
+      summary: Clean a list of Items
+      operationId: cleanItems
+      requestBody:
+        description: List of Items to clean
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Item'
+      responses:
+        '200':
+          description: Items list cleaned successfuly
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoriesSummary"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /category:
+    post:
+      summary: Adds a new Category
+      operationId: addCategory
+      requestBody:
+        description: The Category to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Category'
+      responses:
+        '201':
+          description: Category added successfuly
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        '400':
+          description: Invalid Category name
+        '409':
+          description: Category already exists
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      summary: Get all registered Categories
+      operationId: getAllCategory
+      responses:
+        '200':
+          description: List of registered Categories
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Categories"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete a registered Category
+      operationId: deleteCategory
+      responses:
+        '200':
+          description: Deletes a registered Category
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    CategoriesSummary:
+      type: object
+      required:
+        - items
+        - categoriesCount
+      properties:
+        items:
+          type: object
+          $ref: "#/components/schemas/Item"
+        categoriesCount:
+          type: object
+          additionalProperties:
+            type: integer
+    Item:
+      type: object
+      required:
+        - category
+        - subCategory
+      properties:
+        category:
+          type: string
+        subCategory:
+          type: string
+    Category:
+      type: object
+      required:
+        - name
+      properties:
+        namey:
+          type: string
+    Categories:
+      type: array
+      items:
+        $ref: "#/components/schemas/Category"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+```

@@ -9,6 +9,7 @@ import com.tatomarietti.categories.service.app.model.Category;
 import com.tatomarietti.categories.service.app.model.Item;
 import com.tatomarietti.categories.service.storage.CategoryRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
+@Slf4j
 @Service
 @AllArgsConstructor(onConstructor_ = @Autowired)
 public class CategoryService {
@@ -41,6 +43,7 @@ public class CategoryService {
     }
 
     final Category savedCategory = categoryRepository.save(category);
+    log.info("New Category registered {}", savedCategory);
     return new CategoryDto(savedCategory.getName());
   }
 
@@ -58,6 +61,7 @@ public class CategoryService {
       throw new InvalidActionException("Category with name '" + categoryDto.getName() + "' not registered.");
     }
     categoryRepository.delete(category);
+    log.info("Category removed {}", category);
   }
 
   /**
@@ -66,10 +70,12 @@ public class CategoryService {
    * @return
    */
   public List<CategoryDto> listAll() {
-    return categoryRepository.findAll()
+    final List<CategoryDto> allCategories = categoryRepository.findAll()
         .stream()
         .map(this::toCategoryDto)
         .collect(toList());
+    log.info("Listing all categories {}", allCategories);
+    return allCategories;
   }
 
   public CategoryValidator getCategoriesValidator() {

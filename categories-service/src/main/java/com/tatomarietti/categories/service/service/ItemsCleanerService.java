@@ -3,13 +3,12 @@ package com.tatomarietti.categories.service.service;
 import com.tatomarietti.categories.service.api.dto.CategoriesSummaryDto;
 import com.tatomarietti.categories.service.api.dto.CategoryDto;
 import com.tatomarietti.categories.service.api.dto.ItemDto;
-import com.tatomarietti.categories.service.api.dto.SubCategoryDto;
 import com.tatomarietti.categories.service.app.ItemsParser;
 import com.tatomarietti.categories.service.app.model.CategoriesSummary;
 import com.tatomarietti.categories.service.app.model.Category;
 import com.tatomarietti.categories.service.app.model.Item;
-import com.tatomarietti.categories.service.app.model.SubCategory;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +21,7 @@ import java.util.Map;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toMap;
 
+@Slf4j
 @Service
 @AllArgsConstructor(onConstructor_ = @Autowired)
 public class ItemsCleanerService {
@@ -30,16 +30,17 @@ public class ItemsCleanerService {
 
   /**
    * Cleans the given Items list based on the registered Categories in the system.
+   *
    * @param items the list of items to clean
    * @return A Summary containing the cleaned list and a per-category frequencies list
    */
   public CategoriesSummaryDto clean(final List<ItemDto> items) {
-
+    log.info("Cleaning items {}", items);
     final ItemsParser parser = new ItemsParser();
     final LinkedHashSet<Item> parsedItems = parser.parseItems(items);
 
     final CategoriesSummary summary = categoryService.summarize(parsedItems);
-
+    log.info("Computed summary {}", summary);
     return toSummaryDto(summary);
   }
 

@@ -1,0 +1,461 @@
+<h1 id="java-categories-sets-assignment">Java Categories/Sets Assignment</h1>
+<p>By Santiago Marietti.</p>
+<p>Original version of this document: <a href="https://github.com/tatomarietti/categories/blob/master/README.md">README.md</a></p>
+<h2 id="assignment-description">Assignment Description</h2>
+<p>Original doc: <a href="https://github.com/tatomarietti/categories/blob/master/Java-Backend-Categories-Coding-Assignment_v2.docx">Java-Backend-Categories-Coding-Assignment_v2.docx</a></p>
+<p><strong>NOTE:</strong> Sentences from original document have been numbered so they can be easily referred as requirements un this document and inline code comments.</p>
+<ol>
+  <li>In addition to a working program, unit tests should be produced.</li>
+  <li>Treat this as if it was production code being delivered to a client.</li>
+  <li>It should be properly packaged and delivered with sufficient documentation and instructions also provided.</li>
+  <li><p>You must also describe how to deploy and monitor your service, as well as any changes that would be required to load balance your service.</p>
+  </li>
+  <li><p>Develop the following exercise in Java/Springboot.</p>
+  </li>
+  <li><p>As part of the system architecture at a data processing company, you need to design a Service to clean data produced by another service (the client). </p>
+  </li>
+  <li><p>The data is a list of category sub-category pairs. For example, one set of data might be:</p>
+  </li>
+</ol>
+<table>
+  <thead>
+  <tr>
+    <th>Category</th>
+    <th>Subcategory</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>PERSON</td>
+    <td>Bob Jones</td>
+  </tr>
+  <tr>
+    <td>PLACE</td>
+    <td>Washington</td>
+  </tr>
+  <tr>
+    <td>PERSON</td>
+    <td>Mary</td>
+  </tr>
+  <tr>
+    <td>COMPUTER</td>
+    <td>Mac</td>
+  </tr>
+  <tr>
+    <td>PERSON</td>
+    <td>Bob Jones</td>
+  </tr>
+  <tr>
+    <td>OTHER</td>
+    <td>Tree</td>
+  </tr>
+  <tr>
+    <td>ANIMAL</td>
+    <td>Dog</td>
+  </tr>
+  <tr>
+    <td>PLACE</td>
+    <td>Texas</td>
+  </tr>
+  <tr>
+    <td>FOOD</td>
+    <td>Steak</td>
+  </tr>
+  <tr>
+    <td>ANIMAL</td>
+    <td>Cat</td>
+  </tr>
+  <tr>
+    <td>PERSON</td>
+    <td>Mac</td>
+  </tr>
+  </tbody>
+</table>
+<ol>
+  <li>There is a list of valid categories managed by your service.
+    By default, the valid categories are:</li>
+</ol>
+<table>
+  <thead>
+  <tr>
+    <th>Category</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>PERSON</td>
+  </tr>
+  <tr>
+    <td>PLACE</td>
+  </tr>
+  <tr>
+    <td>ANIMAL</td>
+  </tr>
+  <tr>
+    <td>COMPUTER</td>
+  </tr>
+  <tr>
+    <td>OTHER</td>
+  </tr>
+  </tbody>
+</table>
+<ol>
+  <li>When your service receives data from a client, it must process the data, removing duplicate (category, subcategory) pairs and invalid categories.</li>
+  <li>The order of entries in the input data must be preserved, with the duplicates and invalid categories removed.</li>
+  <li>The output must also include the count of entries for each valid category, sorted by the number of valid, unique entries.</li>
+</ol>
+<p>Sample output for the sample input:</p>
+<table>
+  <thead>
+  <tr>
+    <th>Category</th>
+    <th>Subcategory</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>PERSON</td>
+    <td>Bob Jones</td>
+  </tr>
+  <tr>
+    <td>ANIMAL</td>
+    <td>Cat</td>
+  </tr>
+  <tr>
+    <td>ANIMAL</td>
+    <td>Dog</td>
+  </tr>
+  <tr>
+    <td>COMPUTER</td>
+    <td>Mac</td>
+  </tr>
+  <tr>
+    <td>PERSON</td>
+    <td>Mac</td>
+  </tr>
+  <tr>
+    <td>PERSON</td>
+    <td>Mary</td>
+  </tr>
+  <tr>
+    <td>PLACE</td>
+    <td>Texas</td>
+  </tr>
+  <tr>
+    <td>OTHER</td>
+    <td>Tree</td>
+  </tr>
+  <tr>
+    <td>PLACE</td>
+    <td>Washington</td>
+  </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+  <tr>
+    <th>Category</th>
+    <th>Count</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>PLACE</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>PERSON</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>OTHER</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>COMPUTER</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>ANIMAL</td>
+    <td>2</td>
+  </tr>
+  </tbody>
+</table>
+<ol>
+  <li>In addition to processing input data, your service must also provide the ability to add to, delete from, and list the valid categories.</li>
+  <li>Once the category list is modified, subsequent processing requests will apply the new category list to the input data.</li>
+  <li>While a real-world system would use a permanent datastore for the category information (so the current list of categories would be preserved if the service needs to be restarted), it is sufficient for this exercise to maintain the category list in memory.</li>
+  <li>Please implement a REST Service that provides the above functionality.</li>
+  <li>It is up to you to define the input and output data formats, as well as the REST endpoints that are used for data processing and category management.</li>
+  <li>You must also describe how to deploy and monitor your service, as well as any changes that would be required to load balance your service.</li>
+</ol>
+<h2 id="solution">Solution</h2>
+<h3 id="assumptions">Assumptions</h3>
+<ol>
+  <li>Categories names are case-sensitive and only valid in uppercase format and without blank characters (i.e.: <code>PERSON</code> is a valid category while <code>Person</code> is not).</li>
+  <li>Categories names cannot contain blank characters (i.e.: <code>PER SON</code> is not a valid category).</li>
+  <li>SubCategories names are case-sensitive and valid in any casing format (i.e.: <code>Bob Jones</code> is a valid sub-category and different than the also valid <code>bob jones</code>).</li>
+  <li>SubCategories can contain blank characters (i.e.: <code>Bob Jones</code> is a valid category).</li>
+  <li>While <code>Requirement 10</code> states <code>The order of entries in the input data must be preserved</code>, the sample provided is not preserving the input order and ordered by <code>Subcategory</code> instead.
+    This implementation is following Requirement 10 and assuming the given Sample is wrong.</li>
+  <li>While <code>Requirement 11</code> states <code>The output must also include the count of entries for each valid category, sorted by the number of valid, unique entries</code>, it is not specifying ether ASCENDING or DESCENDING order.
+    This implementation assumes that the desired is descending (higher counts first) and that the order in the Sample output is wrong.</li>
+</ol>
+<h3 id="implementation-notes">Implementation notes</h3>
+<ol>
+  <li>Using latest release version (2.3.0.RELEASE) of SpringBoot <a href="https://github.com/spring-projects/spring-boot">https://github.com/spring-projects/spring-boot</a> as of May 22nd 2020.</li>
+  <li>Using latest release version (1.18.12) of Project Lombok <a href="https://projectlombok.org/">https://projectlombok.org/</a> as of May 22nd 2020, to speed-up Java development and reduce boilerplate code.</li>
+  <li>Using latest release version (3.10) of Apache Commons Lang <a href="https://commons.apache.org/proper/commons-lang/">https://commons.apache.org/proper/commons-lang/</a> as of May 22nd 2020, to speed-up Java development and reduce boilerplate code.</li>
+  <li>Using h2 in-memory database as allowed by <code>Requirement 14</code>.</li>
+  <li>Trying to add (POST) or delete (DELETE) a Category with an invalid name will result in a response with Http error code 400 (Bad request).</li>
+  <li>Trying to add (POST) a Category with the same name of an already registered Category will result in a response with Http error code 409 (Conflict).</li>
+  <li>Trying to add (DELETE) a Category with a non registered Category name will result in a response with Http error code 409 (Conflict). </li>
+</ol>
+<h3 id="project-layout">Project Layout</h3>
+<ul>
+  <li><p>Source code mainly located under <a href="https://github.com/tatomarietti/categories/blob/master/categories-service/src/main/java/com/tatomarietti/categories/service/">src/main/java/com/tatomarietti/categories/service/</a> directory:</p>
+    <ul>
+      <li><code>api</code> contains the code responsible of exposing the functionality through a REST API.</li>
+      <li><code>app</code> contains the basic building blocks of the application.</li>
+      <li><code>service</code> contains the logic orchestrating the received requests.</li>
+      <li><code>storage</code> contains the code to support persistent storage (in memory by default, but can be easily configured to be persisted on disk).</li>
+    </ul>
+  </li>
+  <li><p>Api specification can be found at <a href="https://github.com/tatomarietti/categories/blob/master/categories-service/spec/openapi.yaml">scpec directory</a> in OpenAPI 3.0 format.</p>
+    <ul>
+      <li>See <a href="#-OpenAPI-specification">OpenAPI specification</a> at the end of this document.</li>
+    </ul>
+  </li>
+</ul>
+<p><img src="project-layout.jpg?raw=true" alt="Project Layout" title="Project Layout"></p>
+<h3 id="build-and-execute-the-solution">Build and execute the solution</h3>
+<p>Steps to compile the application (from the repository root):</p>
+<ol>
+  <li>Change to categories-service directory<pre><code class="lang-bash"><span class="hljs-built_in">cd</span> categories-service
+</code></pre>
+  </li>
+  <li>Compile and run tests (assuming maven 3 is installed on the system)<pre><code class="lang-bash">mvn clean <span class="hljs-class"><span class="hljs-keyword">package</span></span>
+</code></pre>
+  </li>
+  <li>Start the server in localhost at 8080<pre><code class="lang-bash">java -jar target/categories-service<span class="hljs-number">-0.0</span><span class="hljs-number">.1</span>-SNAPSHOT.jar
+</code></pre>
+  </li>
+  <li>After a couple of seconds the application will be started and listening at localhost on port 8080, and can be tested as described in <a href="#Tests">Tests</a>.</li>
+  <li>Errors and exceptions will be logged to standard output, optionally the output can be also redirected to a file with:<pre><code class="lang-bash">java -jar <span class="hljs-keyword">target</span>/categories-service-<span class="hljs-number">0.0.</span><span class="hljs-number">1</span>-SNAPSHOT.jar | tee -a categories-service.<span class="hljs-built_in">log</span>
+</code></pre>
+  </li>
+</ol>
+<h3 id="deployment">Deployment</h3>
+<p>The service is currently deployed as a service behind NGINX at <a href="http://45.62.245.158" target="_blank">45.62.245.158</a> where there is an html version of this document as home page.</p>
+<p>The endpoints <code>GET, POST, DELETE /categories</code> and <code>POST /cleaner</code> can be exercised in that deployment as described in the next section of this document.</p>
+<p>Logging can be configured to be redirected with custom Spring configuration.</p>
+<h3 id="a-note-on-load-balancing">A note on load balancing</h3>
+<p>The service currently uses an in memory H2 relational database.</p>
+<p>In order to scale horizontally deploying multiple instances of this service behind a load balancer, the persistence layer should be modified to use a shared database for the registered valid Categories.</p>
+<p>Assuming that the list of valid Categories doesn&#39;t change frequently, a Master-Slaves schema could be used where changes to the valid Categories ar written to the master, and reads during Items processing can be obtained from any slave.</p>
+<p>An alternative for simpler horizontal scaling is to make the service completely stateless, receiving the list of valid categories in the same request with the list of Items to clean,
+  the client can maintain the list on its own or retrieve it from another service that may have different (more relaxed) scaling requirements.</p>
+<h3 id="tests">Tests</h3>
+<h4 id="with-postman">With Postman</h4>
+<ul>
+  <li>Request collection can be found <a href="https://documenter.getpostman.com/view/4785998/Szt8dVRa">here</a></li>
+  <li>Or downloaded/executed with Postman with the following button</li>
+</ul>
+<p><a href="https://app.getpostman.com/run-collection/152a3fa3c20b96acc197"><img src="https://run.pstmn.io/button.svg" alt="Run in Postman"></a></p>
+<h4 id="with-curl">With curl</h4>
+<ul>
+  <li><p>Get All Categories</p>
+    <pre><code class="lang-bash">curl --request GET '<span class="hljs-number">45.62</span><span class="hljs-number">.245</span><span class="hljs-number">.158</span>/category'
+</code></pre>
+    <p><a href="45.62.245.158/category" target="_blank">Link to GET /category</a></p>
+  </li>
+  <li><p>Add Category</p>
+    <pre><code class="lang-bash"><span class="hljs-string">curl </span><span class="hljs-built_in">--request</span> <span class="hljs-string">POST </span><span class="hljs-string">'45.62.245.158/category'</span> \
+<span class="hljs-built_in">--header</span> <span class="hljs-string">'Content-Type: application/json'</span> \
+<span class="hljs-built_in">--data-raw</span> <span class="hljs-string">'{
+"name": "FOOD"
+}'</span>
+</code></pre>
+  </li>
+  <li><p>Remove Category</p>
+    <pre><code class="lang-bash"><span class="hljs-string">curl </span><span class="hljs-built_in">--request</span> <span class="hljs-string">DELETE </span><span class="hljs-string">'45.62.245.158/category'</span> \
+<span class="hljs-built_in">--header</span> <span class="hljs-string">'Content-Type: application/json'</span> \
+<span class="hljs-built_in">--data-raw</span> <span class="hljs-string">'{
+"name": "FOOD"
+}'</span>
+</code></pre>
+  </li>
+  <li><p>Clean Items</p>
+    <pre><code class="lang-bash">curl <span class="hljs-comment">--request POST '45.62.245.158/cleaner' \                                                                                                                                                                                                                            [23:05:47]</span>
+<span class="hljs-comment">--header 'Content-Type: application/json' \</span>
+<span class="hljs-comment">--data-raw '[</span>
+{<span class="hljs-string">"category"</span>: <span class="hljs-string">"PERSON"</span>, <span class="hljs-string">"subCategory"</span>: <span class="hljs-string">"Bob Jones"</span>},
+{<span class="hljs-string">"category"</span>: <span class="hljs-string">"PLACE"</span>, <span class="hljs-string">"subCategory"</span>: <span class="hljs-string">"Washington"</span>},
+{<span class="hljs-string">"category"</span>: <span class="hljs-string">"PERSON"</span>, <span class="hljs-string">"subCategory"</span>: <span class="hljs-string">"Mary"</span>},
+{<span class="hljs-string">"category"</span>: <span class="hljs-string">"COMPUTER"</span>, <span class="hljs-string">"subCategory"</span>: <span class="hljs-string">"Mac"</span>},
+{<span class="hljs-string">"category"</span>: <span class="hljs-string">"PERSON"</span>, <span class="hljs-string">"subCategory"</span>: <span class="hljs-string">"Bob Jones"</span>},
+{<span class="hljs-string">"category"</span>: <span class="hljs-string">"OTHER"</span>, <span class="hljs-string">"subCategory"</span>: <span class="hljs-string">"Tree"</span>},
+{<span class="hljs-string">"category"</span>: <span class="hljs-string">"ANIMAL"</span>, <span class="hljs-string">"subCategory"</span>: <span class="hljs-string">"Dog"</span>},
+{<span class="hljs-string">"category"</span>: <span class="hljs-string">"PLACE"</span>, <span class="hljs-string">"subCategory"</span>: <span class="hljs-string">"Texas"</span>},
+{<span class="hljs-string">"category"</span>: <span class="hljs-string">"FOOD"</span>, <span class="hljs-string">"subCategory"</span>: <span class="hljs-string">"Steak"</span>},
+{<span class="hljs-string">"category"</span>: <span class="hljs-string">"ANIMAL"</span>, <span class="hljs-string">"subCategory"</span>: <span class="hljs-string">"Cat"</span>},
+{<span class="hljs-string">"category"</span>: <span class="hljs-string">"PERSON"</span>, <span class="hljs-string">"subCategory"</span>: <span class="hljs-string">"Mac"</span>}
+]'
+</code></pre>
+  </li>
+</ul>
+<p><strong>NOTE</strong>: the previous collections assume that the service is running at IP 45.62.245.158, they can be changed to localhost at port 8080 as described at <a href="#Build-and-execute-the-solution">#Build-and-execute-the-solution</a> </p>
+<p>The codebase includes two different kind of tests:</p>
+<ul>
+  <li>Unit tests, testing individual classes functionality, especially these under <a href="https://github.com/tatomarietti/categories/blob/master/categories-service/src/main/java/com/tatomarietti/categories/service/app">app</a> package.<ul>
+    <li>Can be found under  <a href="https://github.com/tatomarietti/categories/blob/master/categories-service/src/test/java/com/tatomarietti/categories/service/app">test/.../app</a>.</li>
+  </ul>
+  </li>
+  <li>Api tests, testing the different exposed endpoints an its interactions.<ul>
+    <li>Can be found under  <a href="https://github.com/tatomarietti/categories/blob/master/categories-service/src/test/java/com/tatomarietti/categories/service/api/controller">test/.../api/controller</a>.</li>
+  </ul>
+  </li>
+</ul>
+<p><img src="tests.jpg?raw=true" alt="Tests Run" title="Tests Run"></p>
+<h3 id="openapi-specification">OpenAPI specification</h3>
+<p>File available at <a href="https://github.com/tatomarietti/categories/blob/master/categories-service/spec/openapi.yaml">categories-service/spec/openapi.yaml</a></p>
+<pre><code class="lang-yaml"><span class="hljs-attr">openapi:</span> <span class="hljs-string">"3.0.0"</span>
+<span class="hljs-attr">info:</span>
+<span class="hljs-attr">  title:</span> Java Categories/Sets Assignment
+<span class="hljs-attr">  version:</span> <span class="hljs-number">1.0</span><span class="hljs-number">.0</span>
+<span class="hljs-attr">servers:</span>
+<span class="hljs-attr">  - url:</span> <span class="hljs-string">'http://localhost:8080/'</span>
+<span class="hljs-attr">  description:</span> <span class="hljs-string">'Debug server as SpringBoot application'</span>
+<span class="hljs-attr">paths:</span>
+  /cleaner:
+<span class="hljs-attr">    post:</span>
+<span class="hljs-attr">      summary:</span> Clean a list of Items
+<span class="hljs-attr">      operationId:</span> cleanItems
+<span class="hljs-attr">      requestBody:</span>
+<span class="hljs-attr">        description:</span> List of Items to clean
+<span class="hljs-attr">        required:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">        content:</span>
+          application/json:
+<span class="hljs-attr">            schema:</span>
+<span class="hljs-attr">              type:</span> array
+<span class="hljs-attr">              items:</span>
+                $ref: <span class="hljs-string">'#/components/schemas/Item'</span>
+<span class="hljs-attr">      responses:</span>
+        <span class="hljs-string">'200'</span>:
+<span class="hljs-attr">          description:</span> Items list cleaned successfuly
+<span class="hljs-attr">          content:</span>
+            application/json:
+<span class="hljs-attr">              schema:</span>
+                $ref: <span class="hljs-string">"#/components/schemas/CategoriesSummary"</span>
+<span class="hljs-attr">        default:</span>
+<span class="hljs-attr">          description:</span> unexpected error
+<span class="hljs-attr">          content:</span>
+            application/json:
+<span class="hljs-attr">              schema:</span>
+                $ref: <span class="hljs-string">"#/components/schemas/Error"</span>
+  /category:
+<span class="hljs-attr">    post:</span>
+<span class="hljs-attr">      summary:</span> Adds a new Category
+<span class="hljs-attr">      operationId:</span> addCategory
+<span class="hljs-attr">      requestBody:</span>
+<span class="hljs-attr">        description:</span> The Category to be added
+<span class="hljs-attr">        required:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">        content:</span>
+          application/json:
+<span class="hljs-attr">            schema:</span>
+<span class="hljs-attr">              type:</span> array
+<span class="hljs-attr">              items:</span>
+                $ref: <span class="hljs-string">'#/components/schemas/Category'</span>
+<span class="hljs-attr">      responses:</span>
+        <span class="hljs-string">'201'</span>:
+<span class="hljs-attr">          description:</span> Category added successfuly
+<span class="hljs-attr">          content:</span>
+            application/json:
+<span class="hljs-attr">              schema:</span>
+                $ref: <span class="hljs-string">"#/components/schemas/Category"</span>
+        <span class="hljs-string">'400'</span>:
+<span class="hljs-attr">          description:</span> Invalid Category name
+        <span class="hljs-string">'409'</span>:
+<span class="hljs-attr">          description:</span> Category already exists
+<span class="hljs-attr">        default:</span>
+<span class="hljs-attr">          description:</span> unexpected error
+<span class="hljs-attr">          content:</span>
+            application/json:
+<span class="hljs-attr">              schema:</span>
+                $ref: <span class="hljs-string">"#/components/schemas/Error"</span>
+<span class="hljs-attr">    get:</span>
+<span class="hljs-attr">      summary:</span> Get all registered Categories
+<span class="hljs-attr">      operationId:</span> getAllCategory
+<span class="hljs-attr">      responses:</span>
+        <span class="hljs-string">'200'</span>:
+<span class="hljs-attr">          description:</span> List of registered Categories
+<span class="hljs-attr">          content:</span>
+            application/json:
+<span class="hljs-attr">              schema:</span>
+                $ref: <span class="hljs-string">"#/components/schemas/Categories"</span>
+<span class="hljs-attr">        default:</span>
+<span class="hljs-attr">          description:</span> unexpected error
+<span class="hljs-attr">          content:</span>
+            application/json:
+<span class="hljs-attr">              schema:</span>
+                $ref: <span class="hljs-string">"#/components/schemas/Error"</span>
+<span class="hljs-attr">    delete:</span>
+<span class="hljs-attr">      summary:</span> Delete a registered Category
+<span class="hljs-attr">      operationId:</span> deleteCategory
+<span class="hljs-attr">      responses:</span>
+        <span class="hljs-string">'200'</span>:
+<span class="hljs-attr">          description:</span> Deletes a registered Category
+<span class="hljs-attr">        default:</span>
+<span class="hljs-attr">          description:</span> unexpected error
+<span class="hljs-attr">          content:</span>
+            application/json:
+<span class="hljs-attr">              schema:</span>
+                $ref: <span class="hljs-string">"#/components/schemas/Error"</span>
+<span class="hljs-attr">components:</span>
+<span class="hljs-attr">  schemas:</span>
+<span class="hljs-attr">    CategoriesSummary:</span>
+<span class="hljs-attr">      type:</span> object
+<span class="hljs-attr">      required:</span>
+<span class="hljs-bullet">        -</span> items
+<span class="hljs-bullet">        -</span> categoriesCount
+<span class="hljs-attr">      properties:</span>
+<span class="hljs-attr">        items:</span>
+<span class="hljs-attr">          type:</span> object
+          $ref: <span class="hljs-string">"#/components/schemas/Item"</span>
+<span class="hljs-attr">        categoriesCount:</span>
+<span class="hljs-attr">          type:</span> object
+<span class="hljs-attr">          additionalProperties:</span>
+<span class="hljs-attr">            type:</span> integer
+<span class="hljs-attr">    Item:</span>
+<span class="hljs-attr">      type:</span> object
+<span class="hljs-attr">      required:</span>
+<span class="hljs-bullet">        -</span> category
+<span class="hljs-bullet">        -</span> subCategory
+<span class="hljs-attr">      properties:</span>
+<span class="hljs-attr">        category:</span>
+<span class="hljs-attr">          type:</span> string
+<span class="hljs-attr">        subCategory:</span>
+<span class="hljs-attr">          type:</span> string
+<span class="hljs-attr">    Category:</span>
+<span class="hljs-attr">      type:</span> object
+<span class="hljs-attr">      required:</span>
+<span class="hljs-bullet">        -</span> name
+<span class="hljs-attr">      properties:</span>
+<span class="hljs-attr">        namey:</span>
+<span class="hljs-attr">          type:</span> string
+<span class="hljs-attr">    Categories:</span>
+<span class="hljs-attr">      type:</span> array
+<span class="hljs-attr">      items:</span>
+        $ref: <span class="hljs-string">"#/components/schemas/Category"</span>
+<span class="hljs-attr">    Error:</span>
+<span class="hljs-attr">      type:</span> object
+<span class="hljs-attr">      required:</span>
+<span class="hljs-bullet">        -</span> code
+<span class="hljs-bullet">        -</span> message
+<span class="hljs-attr">      properties:</span>
+<span class="hljs-attr">        code:</span>
+<span class="hljs-attr">          type:</span> integer
+<span class="hljs-attr">          format:</span> int32
+<span class="hljs-attr">        message:</span>
+<span class="hljs-attr">          type:</span> string
+</code></pre>
