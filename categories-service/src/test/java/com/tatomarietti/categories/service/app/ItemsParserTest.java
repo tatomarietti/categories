@@ -67,4 +67,50 @@ class ItemsParserTest {
         new Item(Category.fromName("PERSON"),SubCategory.fromName("Mac"))
     );
   }
+
+  @Test
+  public void ignoresInvalidCategories() {
+    List<ItemDto> itemDtos = Arrays.asList(
+        new ItemDto("PERSON", "Bob Jones "),
+        new ItemDto("CATEGORY WITH SPACES", "Washington"),
+        new ItemDto("COMPUTER", "Mac"),
+        new ItemDto("CamelCaseCategory", "Bob Jones"),
+        new ItemDto("OTHER", "Tree"),
+        new ItemDto("lowercase", "Dog"),
+        new ItemDto(null, "null")
+    );
+
+    final ItemsParser itemsParser = new ItemsParser();
+    final LinkedHashSet<Item> parsedItems = itemsParser.parseItems(itemDtos);
+
+    assertThat(parsedItems)
+        .hasSize(3); // Only 3 valid categories
+
+    assertThat(parsedItems).containsExactly(
+        new Item(Category.fromName("PERSON"), SubCategory.fromName("Bob Jones")),
+        new Item(Category.fromName("COMPUTER"),SubCategory.fromName("Mac")),
+        new Item(Category.fromName("OTHER"),SubCategory.fromName("Tree"))
+    );
+  }
+
+  @Test
+  public void ignoresInvalidSubCategories() {
+    List<ItemDto> itemDtos = Arrays.asList(
+        new ItemDto("PERSON", "Bob Jones"),
+        new ItemDto("COMPUTER", "        "),
+        new ItemDto("OTHER", "Tree"),
+        new ItemDto("ANIMAL  ", null)
+    );
+
+    final ItemsParser itemsParser = new ItemsParser();
+    final LinkedHashSet<Item> parsedItems = itemsParser.parseItems(itemDtos);
+
+    assertThat(parsedItems)
+        .hasSize(2); // Only 2 valid categories
+
+    assertThat(parsedItems).containsExactly(
+        new Item(Category.fromName("PERSON"), SubCategory.fromName("Bob Jones")),
+        new Item(Category.fromName("OTHER"),SubCategory.fromName("Tree"))
+    );
+  }
 }

@@ -5,10 +5,13 @@ import com.tatomarietti.categories.service.app.model.Category;
 import com.tatomarietti.categories.service.app.model.Item;
 import lombok.Value;
 
+import java.util.AbstractMap;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;

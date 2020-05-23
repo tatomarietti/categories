@@ -39,8 +39,7 @@ class ItemsCleanerControllerTest {
       "]";
 
   @Test
-  void canCanCleanSampleData() throws Exception {
-
+  void canCleanSampleData() throws Exception {
     final String expectedCleanedList =
         "{ \"items\": [" +
             "    { \"category\": \"PERSON\", \"subCategory\": \"Bob Jones\" }," +
@@ -71,7 +70,7 @@ class ItemsCleanerControllerTest {
   }
 
   @Test
-  void canCanCleanSampleDataWithOnlyFoodCategory() throws Exception {
+  void canCleanSampleDataWithOnlyFoodCategory() throws Exception {
     // Add FOOD
     final String foodCategory = "{\"name\":\"FOOD\"}";
     mockMvc.perform(post(CategoryController.PATH_CATEGORY)
@@ -117,6 +116,24 @@ class ItemsCleanerControllerTest {
     mockMvc.perform(post(ItemsCleanerController.PATH_CLEANER)
         .contentType(MediaType.APPLICATION_JSON)
         .content(SAMPLE_ITEMS))
+        .andExpect(status().isOk())
+        .andExpect(content().json(expectedCleanedList))
+        .andReturn();
+  }
+
+  @Test
+  void canCleanAnEmptyList() throws Exception {
+    final String emptyList = "[]";
+
+    final String expectedCleanedList =
+        "{" +
+            "\"items\": []," +
+            "\"categoriesCount\": {}" +
+            "}";
+
+    mockMvc.perform(post(ItemsCleanerController.PATH_CLEANER)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(emptyList))
         .andExpect(status().isOk())
         .andExpect(content().json(expectedCleanedList))
         .andReturn();
